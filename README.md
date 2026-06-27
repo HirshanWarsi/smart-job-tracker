@@ -153,7 +153,7 @@ npm run dev
 📧 Email: **hirshanwarsi@gmail.com**
 
 🔗 LinkedIn:  
-https://www.linkedin.com/in/hirshan-warsi/
+https://www.linkedin.com/in/hirshan-warsi-358a09307
 
 💻 GitHub:  
 https://github.com/HirshanWarsi
