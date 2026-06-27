@@ -32,11 +32,10 @@ npm install
 npm run dev
 
 👨‍💻 Author
-
 Hirshan Warsi
 
 GitHub: https://github.com/HirshanWarsi
 
-LinkedIn: https://linkedin.com/in/hirshan-warsi-358a09307
+LinkedIn: https://www.linkedin.com/in/hirshan-warsi-358a09307
 
 ⭐ If you like this project, consider giving it a star.
