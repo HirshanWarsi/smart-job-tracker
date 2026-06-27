@@ -1,5 +1,4 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
 
 require("dotenv").config();
@@ -11,9 +10,6 @@ const authRoutes = require("./routes/authRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const aiRoutes = require("./routes/aiRoutes");
 
-// Load env
-dotenv.config();
-
 // Connect DB
 connectDB();
 
@@ -21,8 +17,13 @@ connectDB();
 const app = express();
 
 // Middlewares
-app.use(express.json());
-app.use(cors());
+app.use(express.json({ limit: "10mb" }));
+app.use(
+  cors({
+    origin: ["http://localhost:5173", process.env.CLIENT_URL].filter(Boolean),
+    credentials: true,
+  }),
+);
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -38,9 +39,5 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.info(`Server running on port ${PORT}`);
 });
-
-app.use(cors({
-  origin: "https://your-frontend-url.vercel.app"
-}));

@@ -1,15 +1,19 @@
 const Job = require("../models/Job");
 
+const VALID_STATUSES = ["Applied", "Interview", "Offer", "Rejected", "Saved"];
+
 // Create Job
 exports.createJob = async (req, res) => {
-  const { company, role, status, notes } = req.body;
+  const { company, role, status, notes, jobUrl } = req.body;
+  const safeStatus = VALID_STATUSES.includes(status) ? status : "Applied";
 
   const job = await Job.create({
     user: req.user._id,
     company,
     role,
-    status,
+    status: safeStatus,
     notes,
+    jobUrl,
   });
 
   res.status(201).json(job);
@@ -17,7 +21,7 @@ exports.createJob = async (req, res) => {
 
 // Get Jobs
 exports.getJobs = async (req, res) => {
-  const jobs = await Job.find({ user: req.user._id });
+  const jobs = await Job.find({ user: req.user._id }).sort({ createdAt: -1 });
   res.json(jobs);
 };
 
@@ -31,7 +35,12 @@ exports.updateJob = async (req, res) => {
     return res.status(401).json({ message: "Not authorized" });
   }
 
-  const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, {
+  const updatePayload = { ...req.body };
+  if (updatePayload.status && !VALID_STATUSES.includes(updatePayload.status)) {
+    updatePayload.status = "Applied";
+  }
+
+  const updatedJob = await Job.findByIdAndUpdate(req.params.id, updatePayload, {
     new: true,
   });
 

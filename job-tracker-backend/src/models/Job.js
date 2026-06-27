@@ -10,12 +10,13 @@ const jobSchema = new mongoose.Schema(
     role: String,
     status: {
       type: String,
-      enum: ["Applied", "Interview", "Rejected"],
+      enum: ["Applied", "Interview", "Offer", "Rejected", "Saved"],
       default: "Applied",
     },
+    jobUrl: String,
     notes: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Job", jobSchema);
